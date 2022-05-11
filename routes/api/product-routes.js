@@ -42,8 +42,9 @@ router.get('/:id',async (req, res) => {
 router.post('/', (req, res) => {
   Product.create(req.body)
     .then((product) => {
-      if (req.body.tagIds.length) {
-        const productTagIdArr = req.body.tagIds.map((tag_id) => {
+      let tagArr= req.body.tagIds;
+      if (tagArr.length) {
+        const productTagIdArr = tagArr.map((tag_id) => {
           return {
             product_id: product.id,
             tag_id,
@@ -84,7 +85,7 @@ router.put('/:id', (req, res) => {
         .map(({ id }) => id);
 
       return Promise.all([
-        ProductTag.destroy({ where: { id: productTagsToRemove } }),
+        ProductTag.destroy({ where: { product_id: productTagsToRemove } }),
         ProductTag.bulkCreate(newProductTags),
       ]);
     })
