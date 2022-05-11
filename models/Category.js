@@ -15,6 +15,7 @@ Category.init(
     sequelize,
     timestamps: false,
     underscored: true,
+    freezeTableName: true,
     modelName: 'category',
   }
 );

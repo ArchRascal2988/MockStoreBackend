@@ -3,11 +3,7 @@ const { Category, Product } = require('../../models');
 
 router.get('/',async (req, res) => {
   try{
-    const data= await Category.findAll({inlcude:[{
-      model: Product,
-      through: Category,
-      as: "associated_products"
-    }]});
+    const data= await Category.findAll({inlcude:[Product]});
     res.status(200).json(data);
   } catch(err){
     res.status(400).json(err);
@@ -16,11 +12,7 @@ router.get('/',async (req, res) => {
 
 router.get('/:id',async (req, res) => {
   try{
-    const data= await Category.findByPk(req.params.id,{inlcude:[{
-      model: Product,
-      through: Category,
-      as: "associated_products"
-    }]});
+    const data= await Category.findByPk(req.params.id,{inlcude:[{inlcude:[Product]}]});
     res.status(200).json(data);
   } catch(err){
     res.status(400).json(err);
